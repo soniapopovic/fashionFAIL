@@ -1,5 +1,5 @@
 import * as WebBrowser from 'expo-web-browser';
-import React from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import {
   Image,
   Platform,
@@ -10,61 +10,38 @@ import {
   View,
 } from 'react-native';
 
+import { Camera } from 'expo-camera';
+import CameraInput from '../CameraInput.js';
+
 import { MonoText } from '../components/StyledText';
+import * as Permissions from 'expo-permissions';
 
 export default function HomeScreen() {
+
+  const [status, setStatus] = useState(false)
+console.log(status)
+  useEffect(()=>{
+    Permissions.askAsync(Permissions.CAMERA).then(({status})=>{setStatus(status==='granted')})
+  }, [])
+
+const inputRef = useRef(null)
+
+  // var statusGranted;
+  // Permissions.askAsync(Permissions.CAMERA).then(({status})=>{statusGranted=(status==="granted")}).then(console.log(statusGranted));
+  
   return (
     <View style={styles.container}>
       <ScrollView
-        style={styles.container}
+        style={styles.contentContainer}
         contentContainerStyle={styles.contentContainer}>
-        <View style={styles.welcomeContainer}>
-          <Image
-            source={
-              __DEV__
-                ? require('../assets/images/robot-dev.png')
-                : require('../assets/images/robot-prod.png')
-            }
-            style={styles.welcomeImage}
-          />
+
+        <View  allow="microphone; camera;"> 
+          {/* <input ref={inputRef} type="text" /> */}
+          <CameraInput/>
         </View>
 
-        <View style={styles.getStartedContainer}>
-          <DevelopmentModeNotice />
-
-          <Text style={styles.getStartedText}>Get started by opening</Text>
-
-          <View
-            style={[styles.codeHighlightContainer, styles.homeScreenFilename]}>
-            <MonoText>screens/HomeScreen.js</MonoText>
-          </View>
-
-          <Text style={styles.getStartedText}>
-            Change this text and your app will automatically reload.
-          </Text>
-        </View>
-
-        <View style={styles.helpContainer}>
-          <TouchableOpacity onPress={handleHelpPress} style={styles.helpLink}>
-            <Text style={styles.helpLinkText}>
-              Help, it didn’t automatically reload!
-            </Text>
-          </TouchableOpacity>
-        </View>
       </ScrollView>
 
-      <View style={styles.tabBarInfoContainer}>
-        <Text style={styles.tabBarInfoText}>
-          This is a tab bar. You can edit it in:
-        </Text>
-
-        <View
-          style={[styles.codeHighlightContainer, styles.navigationFilename]}>
-          <MonoText style={styles.codeHighlightText}>
-            navigation/MainTabNavigator.js
-          </MonoText>
-        </View>
-      </View>
     </View>
   );
 }
