@@ -25,6 +25,7 @@ export default function MaterialInputScreen() {
 
 	var materialItems = [
 		'Polyester',
+		'Cotton',
 		'Nylon',
 		'Acrylic',
 		'Spandex',
@@ -99,7 +100,7 @@ export default function MaterialInputScreen() {
 					}}
 				/>
 			</View>
-			<Button style={styles.submitButton} title="Submit" onPress={() => {}} />
+			<Button style={styles.submitButton} title="Submit" onPress={{}} />
 		</ScrollView>
 	);
 }
