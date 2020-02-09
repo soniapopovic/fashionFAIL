@@ -4,11 +4,15 @@ import * as Font from 'expo-font';
 import React, { useState } from 'react';
 import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { Camera } from 'expo-camera';
+import { CameraInput } from './CameraInput.js';
 
 import AppNavigator from './navigation/AppNavigator';
 
 export default function App(props) {
   const [isLoadingComplete, setLoadingComplete] = useState(false);
+  const [hasPermission, setHasPermission] = useState(null);
+  const [type, setType] = useState(Camera.Constants.Type.back);
 
   if (!isLoadingComplete && !props.skipLoadingScreen) {
     return (
@@ -21,12 +25,15 @@ export default function App(props) {
   } else {
     return (
       <View style={styles.container}>
-        {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+        {Platform.OS === 'ios' && <CameraInput/>}
         <AppNavigator />
       </View>
     );
   }
+  
 }
+
+
 
 async function loadResourcesAsync() {
   await Promise.all([
