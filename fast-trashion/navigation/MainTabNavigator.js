@@ -8,6 +8,8 @@ import HomeScreen from '../screens/HomeScreen';
 import LinksScreen from '../screens/LinksScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 
+import MaterialInputScreen from '../screens/MaterialInput';
+
 const config = Platform.select({
 	web: { headerMode: 'screen' },
 	default: {}
@@ -74,8 +76,27 @@ SettingsStack.navigationOptions = {
 
 SettingsStack.path = '';
 
+// Material Input
+
+const MaterialInputStack = createStackNavigator(
+	{
+		MaterialInput: MaterialInputScreen
+	},
+	config
+);
+
+MaterialInputStack.navigationOptions = {
+	tabBarLabel: 'Materials',
+	tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="input" />
+};
+
+MaterialInputStack.path = '';
+
+// Stats
+
 const tabNavigator = createBottomTabNavigator({
-	HomeStack
+	HomeStack,
+	MaterialInputStack
 });
 
 tabNavigator.path = '';
