@@ -36,7 +36,8 @@ function CameraInput(props) {
     }
     return (
         <View style={{ flex: 1 }}>
-            <Camera style={{ flex: 1 }} ref={ref => {
+            <Camera style={{ flex: 1,
+                            height: 400 }} ref={ref => {
                 setCameraRef(ref);
             }} type={type}>
                 <View
@@ -64,6 +65,7 @@ function CameraInput(props) {
             </Camera>
             <Button title='Take a picture' onPress={() => snap(cameraRef, setPhoto)}/>
         </View>
+        
     );
 }
 
